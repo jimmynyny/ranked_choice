@@ -36,10 +36,6 @@ def goVote():
     	vChoiceStats[str(numVotes)] += 1
     	for x in range(0,numVotes):
     		randVote = random.randrange(len(cList))
-    		# print(len(cList))
-    		# print(randVote)
-    		# pprint.pprint(cList)
-    		# print(type(cList))
     		thisVote.append(cList[randVote])
     		vStats[cList[randVote]][str(x)] += 1
     		del cList[randVote]
