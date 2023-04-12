@@ -20,22 +20,26 @@ vChoiceStats = {"1": 0,"2": 0,"3": 0,"4": 0, "5": 0}
 votes = []
 
 def printRoundTotals(r):
-	print "Round " + str(r) + " totals:\n"
+	print ("Round " + str(r) + " totals:\n")
 
 	for x in cVotes.keys():
-		print x + ": " + str(len(cVotes[x]));
+		print (x + ": " + str(len(cVotes[x])));
 
-	print "\n"
+	print ("\n")
 
 
 def goVote():
     for v in range(0,NUM_VOTERS):
     	thisVote = []
-    	cList = cVotes.keys()
+    	cList = list(cVotes.keys())[:200]
     	numVotes = random.randrange(MAX_CHOICES)+1
     	vChoiceStats[str(numVotes)] += 1
     	for x in range(0,numVotes):
     		randVote = random.randrange(len(cList))
+    		# print(len(cList))
+    		# print(randVote)
+    		# pprint.pprint(cList)
+    		# print(type(cList))
     		thisVote.append(cList[randVote])
     		vStats[cList[randVote]][str(x)] += 1
     		del cList[randVote]
@@ -43,11 +47,11 @@ def goVote():
     	cVotes[thisVote[0]].append(thisVote);
 
 def tabulateVotes(roundNum=1):
-	lowestVoteCount = cVotes.keys()[0]
+	lowestVoteCount = list(cVotes.keys())[:200][0]
 	totalVotes = 0
-	for x in cVotes.keys():
+	for x in list(cVotes.keys())[:200]:
 		totalVotes += len(cVotes[x])
-	for x in cVotes.keys():
+	for x in list(cVotes.keys())[:200]:
 		if float(len(cVotes[x])) / float(totalVotes) <= 0.500:
 			if len(cVotes[x]) < len(cVotes[lowestVoteCount]):
 				lowestVoteCount = x
@@ -57,7 +61,7 @@ def tabulateVotes(roundNum=1):
 	for v in range(0,len(cVotes[lowestVoteCount])):
 		del cVotes[lowestVoteCount][v][0]
 
-		while len(cVotes[lowestVoteCount][v]) > 0 and cVotes[lowestVoteCount][v][0] not in cVotes.keys():
+		while len(cVotes[lowestVoteCount][v]) > 0 and cVotes[lowestVoteCount][v][0] not in list(cVotes.keys())[:200]:
 			del cVotes[lowestVoteCount][v][0]
 
 		if len(cVotes[lowestVoteCount][v]) > 0:
@@ -72,10 +76,10 @@ goVote()
 
 printRoundTotals(1)
 
-print tabulateVotes(2)
+print (tabulateVotes(2))
 
-print "How Candidates Ranked"
+print ("How Candidates Ranked")
 pprint.pprint(vStats)
 
-print "How Many Voters Chose How Many Candidates"
+print ("How Many Voters Chose How Many Candidates")
 pprint.pprint(vChoiceStats)
